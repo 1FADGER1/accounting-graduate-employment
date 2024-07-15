@@ -1,10 +1,39 @@
 ﻿@page
 @model IndexModel
 @{
-    ViewData["Title"] = "Home page";
+    ViewData["Title"] = "Все студенты";
 }
 
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1 class="display-4">Студенты</h1>
+    <div class="btn-basic" role="group">
+        <form class="d-flex" style="flex-wrap: wrap;">
+            <input class="form-control me-2" style=" width: 500px;" type="search" placeholder="Поиск" aria-label="Поиск">
+            <button class="btn btn-outline-success" type="submit" style="margin-right: 330px">Поиск</button>
+        </form>
+        <button type="button" class="btn btn-primary" title="Добавление в БД">Добавить</button>
+        <button type="button" class="btn btn-primary" title="Импорт из файла">Импортировать</button>
+    </div>
+    <div class="student-container">
+        <div class="student-card" onclick="redirectToDetail()" title="Открыть детальную информацию">
+            <div class="row">
+                <div class="header-and-buttons">
+                    <h3>Иванов Иван Иванович</h3>
+                    <div class="btn-group" role="group" onclick="event.stopPropagation()">
+                        <button type="button" class="btn btn-primary" title="Изменить эти данные">Изменить</button>
+                        <button type="button" class="btn btn-primary" title="Удалить эти данные">Удалить</button>
+                    </div>
+                </div>
+                <h1> </h1>
+                <div class="col-md-7">
+                    <p><strong>Пол:</strong> Мужской</p>
+                    <p><strong>Направление подготовки:</strong> 09.03.01 Информатика и вычислительная техника</p>
+                </div>
+                <div class="col-md-5">
+                    <p><strong>Номер телефона:</strong> +71234567890</p>
+                    <p><strong>Дата обучения:</strong> 01.09.22-10.07.25</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
