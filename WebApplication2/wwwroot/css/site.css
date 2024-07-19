@@ -51,6 +51,10 @@ fieldset {
     color: #FFFED3; /*FFFEAE  BFBF92 E0D8FF*/
 }
 
+.modal-body{
+    text-align: left;
+}
+
 .btn-basic {
     width: 90%;
     display: flex;

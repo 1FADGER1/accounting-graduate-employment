@@ -1,0 +1,45 @@
+﻿@page
+@model WebApplication2.Pages.Specialties.IndexModel
+@{
+    ViewData["Title"] = "Все специальности";
+}
+
+<p>
+    <a asp-page="Create">Создать</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Код направления
+            </th>
+            <th>
+                Название направления
+            </th>
+            <th>
+                Профиль направления
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Specialty) {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.CodeSpecialty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NameSpecialty)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrainingSpecialty)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.CodeSpecialty">Изменить</a> |
+                <a asp-page="./Details" asp-route-id="@item.CodeSpecialty">Детали</a> |
+                <a asp-page="./Delete" asp-route-id="@item.CodeSpecialty">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

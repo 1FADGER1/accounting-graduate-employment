@@ -1,0 +1,38 @@
+﻿@page
+@model WebApplication2.Pages.Specialties.CreateModel
+@{
+    ViewData["Title"] = "Создать специальность";
+}
+
+<h4>Specialty</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Specialty.CodeSpecialty" class="control-label">Код направления (без точек)</label>
+                <input asp-for="Specialty.CodeSpecialty" class="form-control" />
+                <span asp-validation-for="Specialty.CodeSpecialty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Specialty.NameSpecialty" class="control-label">Название направления</label>
+                <input asp-for="Specialty.NameSpecialty" class="form-control" />
+                <span asp-validation-for="Specialty.NameSpecialty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Specialty.TrainingSpecialty" class="control-label">Профиль направления</label>
+                <input asp-for="Specialty.TrainingSpecialty" class="form-control" />
+                <span asp-validation-for="Specialty.TrainingSpecialty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Создать" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="Index">Вернуться к списку</a>
+</div>
+

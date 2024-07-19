@@ -1,39 +1,51 @@
 ﻿@page
 @model WebApplication2.Pages.DetailModel
 @{
-    ViewData["Title"] = "Данные о ";
+    ViewData["Title"] = "Данные о " + Model.Student.FullName;
 }
 
 <div id="details">
-    <h1>Иванов Иван Иванович</h1>
+    <h1>@Model.Student.FullName</h1> <!-- Нужно добавить кнопку изменить -->
     <div class="row">
         <div class="col-md-6">
             <fieldset>
                 <legend>Основная информация</legend>
-                <p>День рождения: </p>
-                <p>Пол: </p>
-                <p>Национальность: </p>
-                <p>Адрес проживания: </p>
-                <p>Номер телефона: <a></a></p> <!-- Можно попробовать <u></u> -->
-                <p>E-mail: <a></a></p>
+                <p>День рождения: @Model.Student.Birthday</p>
+                <p>Пол: @Model.Student.Gender</p>
+                <p>Национальность: @Model.Student.Nationality</p>
+                <p>Адрес проживания: </p> <!-- Здесь нужно переделать -->
+                <p>Номер телефона: <u>@Model.Student.PhoneNumber</u></p> <!-- Можно попробовать <u></u> -->
+                <p>E-mail: <u>@Model.Student.Email</u></p>
             </fieldset>
             
             <fieldset>
                 <legend>Дополнительная информация</legend>
-                <p>СНИЛС: </p>
-                <p>Наличие трудовой книжки: </p>
-                <p>Направление подготовки: </p>
-                <p>Дата обучения: </p>
-                <p>Форма обучения: </p>
+                <p>СНИЛС: @Model.Student.SNILS</p>
+                <p>Наличие трудовой книжки: </p> <!-- Здесь нужно переделать -->
+                <p>Направление подготовки: @Model.Student.CodeSpecialty</p> <!-- Здесь нужно переделать -->
+                <p>Дата обучения: @Model.Student.YearAdmission - @Model.Student.YearGraduation</p>
+                <p>Форма обучения: @Model.Student.FormEducation</p>
             </fieldset>
         </div>
         <fieldset class="col-md-6">
             <legend>Деятельность выпускника</legend>
+            <button type="button" class="btn btn-primary" title="Добавление в БД" data-toggle="modal" data-target="#Add">Добавить</button> <!-- Выравнять кнопку и добавить функционал -->
             <p>30.06.21 Завершение обучения по направлению подготовки (указать)</p>
             <p>01.08.21 Безработный, поставлен на учёт</p>
             <p>01.10.21 Служба в ВС РФ, в/ч 66666, рядовой</p>
-            <p>01.12.22 Трудоустройство в <a>ООО "Рога и копыта"</a>, должность – инженер</p> <!-- Cсылка должна вести на список "Место работы"" (полное название организации, ОКВЭД, ИНН, регион регистрации)-->
+            <p>01.12.22 Трудоустройство в <a href="/workplaces">ООО "Рога и копыта"</a>, должность – инженер</p> <!-- Cсылка должна вести на список "Место работы" (полное название организации, ОКВЭД, ИНН, регион регистрации) -->
             <p>10.02.23 Самозанятый, разработка ПО</p>
         </fieldset>
     </div>
 </div>
+
+<!--
+<div class="row mt-4">
+
+</div>
+<div class="form-group mt-4 text-left"> col
+    <label asp-for="" class="control-label"></label>
+    <input asp-for="" class="form-control" />
+    <span asp-validation-for="" class="text-danger"></span>
+</div>
+-->

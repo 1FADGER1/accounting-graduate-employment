@@ -1,3 +1,3 @@
-﻿function redirectToDetail() {
-    window.location.href = `/Detail`;
+﻿function redirectToDetail(id) {
+    window.location.href = `/Detail?id=${id}`;
 }

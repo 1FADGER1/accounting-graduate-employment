@@ -1,0 +1,44 @@
+﻿@page
+@model WebApplication2.Pages.Workplaces.EditModel
+@{
+    ViewData["Title"] = "Изменить "+Model.Workplace.Appellation;
+}
+
+<h4>Рабочее место</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Workplace.ID" />
+            <div class="form-group">
+                <label asp-for="Workplace.Appellation" class="control-label">Название организации</label>
+                <input asp-for="Workplace.Appellation" class="form-control" />
+                <span asp-validation-for="Workplace.Appellation" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Workplace.OKVED" class="control-label">ОКВЭД</label>
+                <input asp-for="Workplace.OKVED" class="form-control" />
+                <span asp-validation-for="Workplace.OKVED" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Workplace.INN" class="control-label">ИНН</label>
+                <input asp-for="Workplace.INN" class="form-control" />
+                <span asp-validation-for="Workplace.INN" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Workplace.Region" class="control-label">Регион</label>
+                <input asp-for="Workplace.Region" class="form-control" />
+                <span asp-validation-for="Workplace.Region" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Сохранить" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-page="./Index">Вернуться к списку</a>
+</div>
+

@@ -1,0 +1,37 @@
+﻿@page
+@model WebApplication2.Pages.Specialties.DeleteModel
+@{
+    ViewData["Title"] = "Удалить специальность";
+}
+
+<h3>Вы действительно хотите удалить эту запись?</h3>
+<div>
+    <h4>Специальность</h4>
+    <hr />
+    <dl>
+        <dt class="col-sm-2">
+            Код направления
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Specialty.CodeSpecialty)
+        </dd>
+        <dt class="col-sm-2">
+            Название направления
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Specialty.NameSpecialty)
+        </dd>
+        <dt class="col-sm-2">
+            Профиль направления
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Specialty.TrainingSpecialty)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Specialty.CodeSpecialty" />
+        <input type="submit" value="Удалить" class="btn btn-danger" /> |
+        <a asp-page="./Index">Вернуться к списку</a>
+    </form>
+</div>

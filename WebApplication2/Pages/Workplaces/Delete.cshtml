@@ -1,0 +1,43 @@
+﻿@page
+@model WebApplication2.Pages.Workplaces.DeleteModel
+@{
+    ViewData["Title"] = "Удалить организацию";
+}
+
+<h3>Вы действительно хотите удалить эту запись?</h3>
+<div>
+    <h4>Рабочее место</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Название организации
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Workplace.Appellation)
+        </dd>
+        <dt class="col-sm-2">
+            ОКВЭД
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Workplace.OKVED)
+        </dd>
+        <dt class="col-sm-2">
+            ИНН
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Workplace.INN)
+        </dd>
+        <dt class="col-sm-2">
+            Регион
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Workplace.Region)
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="Workplace.ID" />
+        <input type="submit" value="Удалить" class="btn btn-danger" /> |
+        <a asp-page="./Index">Вернуться к списку</a>
+    </form>
+</div>

@@ -1,0 +1,51 @@
+﻿@page
+@model WebApplication2.Pages.Workplaces.IndexModel
+@{
+    ViewData["Title"] = "Все рабочие места";
+}
+
+<p>
+    <a asp-page="Create">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Название организации
+            </th>
+            <th>
+                ОКВЭД
+            </th>
+            <th>
+                ИНН
+            </th>
+            <th>
+                Регион
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Workplace) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Appellation)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.OKVED)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.INN)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Region)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Изменить</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Детали</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

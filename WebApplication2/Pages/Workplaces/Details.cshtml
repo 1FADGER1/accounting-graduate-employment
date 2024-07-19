@@ -1,0 +1,40 @@
+﻿@page
+@model WebApplication2.Pages.Workplaces.DetailsModel
+@{
+    ViewData["Title"] = "Данные о" + Model.Workplace.Appellation;
+}
+
+<div>
+    <h4>Рабочее место</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Название организации
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Workplace.Appellation)
+        </dd>
+        <dt class="col-sm-2">
+            ОКВЭД
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Workplace.OKVED)
+        </dd>
+        <dt class="col-sm-2">
+            ИНН
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Workplace.INN)
+        </dd>
+        <dt class="col-sm-2">
+            Регион
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Workplace.Region)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-page="./Edit" asp-route-id="@Model.Workplace?.ID">Изменить</a> |
+    <a asp-page="./Index">Вернуться к списку</a>
+</div>
