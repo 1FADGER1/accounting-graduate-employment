@@ -7,5 +7,7 @@
         public string? OKVED { get; set; }
         public string? INN { get; set; }
         public string? Region { get; set; }
+
+        public ICollection<Jobs> Jobs { get; set; } = default!;
     }
 }

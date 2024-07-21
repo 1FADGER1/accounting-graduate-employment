@@ -7,8 +7,8 @@
 <div class="text-center">
     <h1 class="display-4">Студенты</h1>
     <div class="btn-basic" role="group">
-        <form class="d-flex" style="flex-wrap: wrap;">
-            <input class="form-control me-2" style=" width: 500px;" type="search" placeholder="Поиск" aria-label="Поиск">
+        <form asp-page="./Index" method="get" class="d-flex" style="flex-wrap: wrap;">
+            <input class="form-control me-2" style=" width: 500px;" type="search" name="SearchString" placeholder="Поиск по имени" aria-label="Поиск">
             <button class="btn btn-outline-success" type="submit" style="margin-right: 330px">Поиск</button>
         </form>
         <button type="button" class="btn btn-primary" title="Добавление в БД" data-toggle="modal" data-target="#Add">Добавить</button>
@@ -28,6 +28,8 @@
                         <div>
                             <form method="post">
                                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                <input type="hidden" name="StudentId" asp-for="Student.ID" />
+                                <input type="hidden" name="AddressId" asp-for="Address.ID" />
                                 <div class="form-group mt-4 text-left">
                                     <label asp-for="Student.FullName" class="control-label">ФИО студента</label>
                                     <input asp-for="Student.FullName" class="form-control" />
@@ -180,13 +182,15 @@
         {
             @foreach (var student in Model.Students)
             {
-                <div class="student-card" onclick="redirectToDetail(@student.ID)" title="Открыть детальную информацию">
+                <div class="student-card" onclick="handleStudentCardClick(event, @student.ID)" title="Открыть детальную информацию">
                     <div class="row">
                         <div class="header-and-buttons">
                             <h3>@student.FullName</h3>
-                            <div class="btn-group" role="group" onclick="event.stopPropagation()">
-                                <button type="button" class="btn btn-primary" title="Изменить эти данные">Изменить</button>
-                                <button type="button" class="btn btn-primary" title="Удалить эти данные">Удалить</button>
+                            <div class="btn-group" role="group">
+                                <a type="button" class="btn btn-primary" title="Изменить данные студента" asp-page="./Edit" asp-route-id="@student.ID">Изменить</a>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#DeleteStudentModal" title="Удалить эту запись"
+                                        onclick="prepareDeleteModal('@student.FullName', @student.ID)">Удалить</button>
+
                             </div>
                         </div>
                         <h1> </h1>
@@ -202,5 +206,31 @@
                 </div>
             }
         }
+    </div>
+    <div class="modal fade" id="DeleteStudentModal" tabindex="-1" role="dialog" aria-labelledby="deleteStudentModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteStudentModalLabel">Удалить эту запись?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-4">
+                        <div>
+                            <p>Вы действиетельно хотите удалить этого студента: <strong id="studentNameToDelete"></strong>?</p>
+                            <div class="modal-footer">
+                                <form method="post">
+                                    <input type="hidden" asp-for="Student.ID" id="studentIdToDelete" name="studentId" />
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмета</button>
+                                    <input type="submit" class="btn btn-danger" value="Удалить" asp-page-handler="Delete" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

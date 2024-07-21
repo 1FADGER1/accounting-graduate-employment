@@ -15,40 +15,83 @@ namespace WebApplication2.Pages
             _context = context;
         }
 
-        public IList<Student> Students { get; set; } = default!;
-        public IList<Specialty> Specialties { get; set; } = default!;
-        // public IDictionary<int, string> SpecialtyDictionary { get; set; } // один из способов сопоставить данные между студентом и специальностью
-        [BindProperty] public Address Address { get; set; } = default!;
-        [BindProperty] public Student Student { get; set; } = default!;
+        [BindProperty(SupportsGet = true)] public string? SearchString { get; set; }
 
         public async Task OnGetAsync()
         {
-            if (_context.Student != null)
+            IQueryable<Student> studentsQuery = _context.Student.Include(s => s.Specialty).Include(s => s.Address);
+
+            if (!string.IsNullOrEmpty(SearchString))
             {
-                Students = await _context.Student.Include(s => s.Specialty).ToListAsync();
+                studentsQuery = studentsQuery.Where(s => s.FullName.Contains(SearchString));
             }
-            if(_context.Specialty != null)
+
+            Students = await studentsQuery.ToListAsync();
+
+            if (_context.Specialty != null)
             {
                 Specialties = await _context.Specialty.ToListAsync();
-
+                Console.WriteLine(Specialties);
                 //SpecialtyDictionary = Specialties.ToDictionary(a => a.CodeSpecialty, s => s.NameSpecialty);
             }
         }
 
+        public IList<Student> Students { get; set; } = default!;
+        public IList<Specialty> Specialties { get; set; } = default!;
+        // public IDictionary<int, string> SpecialtyDictionary { get; set; } // один из способов сопоставить данные между студентом и специальностью
+        [BindProperty] public Address Address { get; set; } = default!;
+        [BindProperty] public StudentViewModel Student { get; set; } = default!;
+
         public async Task<IActionResult> OnPostAddAsync()
         {
-            if (!ModelState.IsValid || _context.Student == null || Student == null || _context.Address == null || Address == null) //
+            if (!ModelState.IsValid || Student == null || Address == null)
             {
-                return Page();
+                return NotFound();
             }
 
             _context.Address.Add(Address);
             await _context.SaveChangesAsync();
-
-            Student.IDResidentialAddress = Address.ID;
-            _context.Student.Add(Student);
             
+            var newStudent = new Student
+            {
+                FullName = Student.FullName,
+                Birthday = Student.Birthday,
+                Gender = Student.Gender,
+                Nationality = Student.Nationality,
+                IDResidentialAddress = Address.ID,
+                PhoneNumber = Student.PhoneNumber,
+                Email = Student.Email,
+                SNILS = Student.SNILS,
+                CodeSpecialty = Student.CodeSpecialty,
+                YearAdmission = Student.YearAdmission,
+                YearGraduation = Student.YearGraduation,
+                FormEducation = Student.FormEducation
+            };
+
+            _context.Student.Add(newStudent);
+
             await _context.SaveChangesAsync();
+
+            return RedirectToPage("./Index");
+        }
+
+        public async Task<IActionResult> OnPostDeleteAsync(int? studentId)
+        {
+            if (studentId == null || _context.Student == null)
+            {
+                return NotFound();
+            }
+
+            var student = await _context.Student
+                .Include(s => s.Address)
+                .FirstOrDefaultAsync(m => m.ID == studentId);
+
+            if (student != null && student.Address != null)
+            {
+                _context.Address.Remove(student.Address);
+                _context.Student.Remove(student);
+                await _context.SaveChangesAsync();
+            }
 
             return RedirectToPage("./Index");
         }

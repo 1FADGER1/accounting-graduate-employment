@@ -20,12 +20,17 @@ namespace WebApplication2.Data
         }
 
         public DbSet<WebApplication2.Models.Student> Student { get; set; } = default!;
+        public DbSet<WebApplication2.Models.Address> Address { get; set; }
+        public DbSet<WebApplication2.Models.Specialty> Specialty { get; set; }
 
-        public DbSet<WebApplication2.Models.Workplace>? Workplace { get; set; }
-        public DbSet<WebApplication2.Models.Address>? Address { get; set; }
 
-        public DbSet<WebApplication2.Models.Specialty>? Specialty { get; set; }
 
-        public DbSet<WebApplication2.Models.EmploymentStatus>? EmploymentStatus { get; set; }
+        public DbSet<WebApplication2.Models.EmploymentStatus> EmploymentStatus { get; set; }
+
+        public DbSet<WebApplication2.Models.Jobs> Jobs { get; set; }
+        public DbSet<WebApplication2.Models.Workplace> Workplace { get; set; }
+
+        public DbSet<WebApplication2.Models.MilitaryService> MilitaryService { get; set; }
+        public DbSet<WebApplication2.Models.SelfEmployment> SelfEmployments { get; set; }
     }
 }

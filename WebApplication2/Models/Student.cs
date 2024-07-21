@@ -11,7 +11,7 @@ namespace WebApplication2.Models
         [Column("birth_date", TypeName = "date"), DataType(DataType.Date)] public DateTime Birthday { get; set; }
         [Column("gender", TypeName = "gender")] public gender Gender { get; set; }
         [Column("nationality")] public string? Nationality { get; set; }
-        [Column("ID_residential_address")] public int IDResidentialAddress { get; set; }
+        [Column("ID_residential_address"), ForeignKey("Address")] public int IDResidentialAddress { get; set; }
         [Column("phone_number")] public string? PhoneNumber { get; set; }
         public string? Email { get; set; }
         public string? SNILS { get; set; }
@@ -19,7 +19,9 @@ namespace WebApplication2.Models
         [Column("year_admission", TypeName = "date"), DataType(DataType.Date)] public DateTime YearAdmission { get; set; }
         [Column("year_graduation", TypeName = "date"), DataType(DataType.Date)] public DateTime YearGraduation { get; set; }
         [Column("form_education")] public form_education FormEducation { get; set; }
-
-        public Specialty Specialty { get; set; } = default!;
+        
+        public Specialty? Specialty { get; set; } = default!;
+        public Address? Address { get; set; } = default!;
+        //public EmploymentStatus EmploymentStatus { get; set; } = default!;
     }
 }

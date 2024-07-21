@@ -14,7 +14,7 @@ public enum gender
 public enum typeemployment
 {
     Работает, 
-    Самозанятый, 
+    Самозанятый,
     Безработный, 
     проходить_службу_в_ВС
 }

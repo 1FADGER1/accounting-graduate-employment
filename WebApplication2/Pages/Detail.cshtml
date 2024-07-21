@@ -5,37 +5,248 @@
 }
 
 <div id="details">
-    <h1>@Model.Student.FullName</h1> <!-- Нужно добавить кнопку изменить -->
+    <div style="display: flex; align-items: baseline; margin-bottom: 10px;">
+        <h1 style="margin-right: 50px;">@Model.Student.FullName</h1>
+        <a type="button" class="btn btn-primary" style="margin-right: 8px;" title="Изменить данные студента" asp-page="./Edit" asp-route-id="@Model.Student.ID">Изменить</a><!-- Нужно добавить кнопку изменить, которая будет переадресовавыть на Edit -->
+        <button type="button" class="btn btn-primary" title="Удалить эту запись" data-toggle="modal" data-target="#DeleteStudent">Удалить</button>
+    </div>
+    <div class="modal fade" id="DeleteStudent" tabindex="-1" role="dialog" aria-labelledby="DeleteModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="DeleteModalLabel">Удалить эту запись?</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-4">
+                        <div>
+                            <p>Вы действиетельно хотите удалить этого студента: <strong>@Model.Student.FullName</strong>?</p>
+                            <div class="modal-footer">
+                                <form method="post">
+                                    <input type="hidden" asp-for="Student.ID" name="id" />
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмета</button>
+                                    <input type="submit" class="btn btn-danger" value="Удалить" asp-page-handler="DeleteStudent" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="row">
-        <div class="col-md-6">
+        <div class="col-md-5" style="margin-bottom: 10px;">
             <fieldset>
                 <legend>Основная информация</legend>
-                <p>День рождения: @Model.Student.Birthday</p>
+                <p>День рождения: @Model.Student.Birthday.ToShortDateString()</p>
                 <p>Пол: @Model.Student.Gender</p>
                 <p>Национальность: @Model.Student.Nationality</p>
-                <p>Адрес проживания: </p> <!-- Здесь нужно переделать -->
-                <p>Номер телефона: <u>@Model.Student.PhoneNumber</u></p> <!-- Можно попробовать <u></u> -->
+                
+                <p>Адрес проживания: @Model.Student.Address.Country, 
+                    @Model.Student.Address.Region,
+                    г. @Model.Student.Address.City,
+                    ул. @Model.Student.Address.Street,
+                    д. @Model.Student.Address.HouseNumber
+                    кв. @Model.Student.Address.ApartmentNumber
+                </p>
+                <p>Номер телефона: <u>@Model.Student.PhoneNumber</u></p>
                 <p>E-mail: <u>@Model.Student.Email</u></p>
             </fieldset>
             
             <fieldset>
                 <legend>Дополнительная информация</legend>
                 <p>СНИЛС: @Model.Student.SNILS</p>
-                <p>Наличие трудовой книжки: </p> <!-- Здесь нужно переделать -->
-                <p>Направление подготовки: @Model.Student.CodeSpecialty</p> <!-- Здесь нужно переделать -->
-                <p>Дата обучения: @Model.Student.YearAdmission - @Model.Student.YearGraduation</p>
+                <p>Наличие трудовой книжки: есть</p>
+                <p>Направление подготовки:</p>
+                <ul>
+                    <li style="font-style:italic;">Название: @Model.Student.Specialty.CodeSpecialty @Model.Student.Specialty.NameSpecialty</li>
+                    <li style="text-decoration:underline;">Профиль: @Model.Student.Specialty.TrainingSpecialty</li>
+                </ul>
+                <p>Дата обучения: @Model.Student.YearAdmission.ToShortDateString() - @Model.Student.YearGraduation.ToShortDateString()</p>
                 <p>Форма обучения: @Model.Student.FormEducation</p>
             </fieldset>
         </div>
-        <fieldset class="col-md-6">
-            <legend>Деятельность выпускника</legend>
-            <button type="button" class="btn btn-primary" title="Добавление в БД" data-toggle="modal" data-target="#Add">Добавить</button> <!-- Выравнять кнопку и добавить функционал -->
-            <p>30.06.21 Завершение обучения по направлению подготовки (указать)</p>
-            <p>01.08.21 Безработный, поставлен на учёт</p>
-            <p>01.10.21 Служба в ВС РФ, в/ч 66666, рядовой</p>
-            <p>01.12.22 Трудоустройство в <a href="/workplaces">ООО "Рога и копыта"</a>, должность – инженер</p> <!-- Cсылка должна вести на список "Место работы" (полное название организации, ОКВЭД, ИНН, регион регистрации) -->
-            <p>10.02.23 Самозанятый, разработка ПО</p>
+        <fieldset class="col-md-7" style="margin-bottom: 10px;">
+            <div style="display: flex; align-items: baseline; margin: 10px 0 10px 0;">
+                <h4 style="margin-right: 140px;">Деятельность выпускника</h4>
+                <button type="button" class="btn btn-primary" title="Добавление в БД" data-toggle="modal" data-target="#Add">Добавить</button> <!-- Выравнять кнопку -->
+            </div>
+            <div class="modal fade" id="Add" tabindex="-1" role="dialog" aria-labelledby="AddModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="AddModalLabel">Добавить деятельность</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="mt-4">
+                                <div>
+                                    <form method="post">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <input type="hidden" asp-for="Student.ID" />
+                                        <input type="hidden" name="EmploymentStatusId" asp-for="EmploymentStatus.ID" />
+                                        <input type="hidden" name="JobsId" asp-for="Jobs.ID" />
+                                        <input type="hidden" name="MilitaryServiceId" asp-for="MilitaryService.ID" />
+                                        <input type="hidden" name="SelfEmploymentId" asp-for="SelfEmployment.ID" />
+                                        <div class="row mt-4">
+                                            <div class="form-group col text-left">
+                                                <label asp-for="EmploymentStatus.StartDate" class="control-label">Дата смены статуса</label>
+                                                <input asp-for="EmploymentStatus.StartDate" type="date" class="form-control" />
+                                                <span asp-validation-for="EmploymentStatus.StartDate" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group col text-left">
+                                                <label asp-for="EmploymentStatus.TypeEmployment" class="control-label">Тип занятости</label>
+                                                <select asp-for="EmploymentStatus.TypeEmployment" class="form-select" aria-label="Default select example" id="EmploymentStatus_TypeEmployment">
+                                                    <option selected>Не выбрано</option>
+                                                    @foreach (var item in Html.GetEnumSelectList<typeemployment>())
+                                                    {
+                                                        <option value="@item.Value">@item.Text</option>
+                                                    }
+                                                </select>
+                                                <span asp-validation-for="EmploymentStatus.TypeEmployment" class="text-danger"></span>
+                                            </div>
+                                        </div>
+
+                                        <!-- Дальше идут элементы зависящии от типа занятости -->
+                                        
+                                        <!-- Работает -->
+                                        <div id="работает-блок" class="mt-4" style="display: none;">
+                                            <div class="form-group col text-left">
+                                                <label asp-for="Jobs.IDWorkplace" class="control-label"><a href="/Workplaces">Рабочее место</a></label>
+                                                <select asp-for="Jobs.IDWorkplace" class="form-select" aria-label="Default select example">
+                                                    <option selected value="null">Не выбрано</option>
+                                                    @if (Model.Workplaces != null)
+                                                    {
+                                                        foreach (var work in Model.Workplaces)
+                                                        {
+                                                            <option value="@work.ID">@work.Appellation @work.INN</option>
+                                                        }
+                                                    }
+                                                </select>
+                                                <span asp-validation-for="Jobs.IDWorkplace" class="text-danger"></span>
+                                            </div>
+                                            <div class="row mt-4">
+                                                <div class="form-group col text-left">
+                                                    <label asp-for="Jobs.Position" class="control-label">Должность</label>
+                                                    <input asp-for="Jobs.Position" class="form-control" />
+                                                    <span asp-validation-for="Jobs.Position" class="text-danger"></span>
+                                                </div>
+                                                <div class="form-group col text-left">
+                                                    <label asp-for="Jobs.AvailabilityEmployment" class="control-label">Наличие трудовой книжки</label>
+                                                    <input asp-for="Jobs.AvailabilityEmployment" type="checkbox" class="form-control" />
+                                                    <span asp-validation-for="Jobs.AvailabilityEmployment" class="text-danger"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Самозанятый -->
+                                        <div id="самозанятый-блок" class="mt-4" style="display: none;">
+                                            <div class="form-group col text-left">
+                                                <label asp-for="SelfEmployment.TypeActivity" class="control-label">Род деятельности</label>
+                                                <input asp-for="SelfEmployment.TypeActivity" class="form-control" />
+                                                <span asp-validation-for="SelfEmployment.TypeActivity" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        
+                                        <!-- ВС -->
+                                        <div id="проходить_службу_в_ВС-блок" class="row mt-4" style="display: none;">
+                                            <div class="form-group col text-left">
+                                                <label asp-for="MilitaryService.PlaceService" class="control-label">Место службы</label>
+                                                <input asp-for="MilitaryService.PlaceService" class="form-control" />
+                                                <span asp-validation-for="MilitaryService.PlaceService" class="text-danger"></span>
+                                            </div>
+                                            <div class="form-group col text-left">
+                                                <label asp-for="MilitaryService.PostMilitary" class="control-label">Должность</label>
+                                                <input asp-for="MilitaryService.PostMilitary" class="form-control" />
+                                                <span asp-validation-for="MilitaryService.PostMilitary" class="text-danger"></span>
+                                            </div>
+                                        </div>
+                                        
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                                            <input type="submit" class="btn btn-primary" value="Добавить" asp-page-handler="Add" />
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p>@Model.Student.YearGraduation.ToShortDateString() Завершение обучения по направлению подготовки @Model.Student.Specialty.CodeSpecialty @Model.Student.Specialty.NameSpecialty </p>
+            @if(Model.EmploymentStatuses != null)
+            {
+                @foreach (var status in Model.EmploymentStatuses)
+                {
+                    <div style="display: flex; align-items: baseline; margin-bottom: 10px;">
+                        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#DeleteEmployment" title="Удалить эти данные" 
+                                onclick="statusDeleteModal('@status.StartDate.ToShortDateString().ToString() @status.TypeEmployment.ToString()', @status.ID)">&times;</button>
+                        <p style="margin-left: 14px;">
+                            @if (status.TypeEmployment == typeemployment.Безработный)
+                            {
+                                <text>@status.StartDate.ToShortDateString() @status.TypeEmployment, поставлен на учёт</text>
+                            }
+                            @if (status.TypeEmployment == typeemployment.Самозанятый)
+                            {
+                                @foreach (var self in status.SelfEmployment)
+                                {
+                                    <text>@status.StartDate.ToShortDateString() @status.TypeEmployment, @self.TypeActivity</text>
+                                }
+                            }
+                            @if (status.TypeEmployment == typeemployment.проходить_службу_в_ВС)
+                            {
+                                @foreach (var m in status.MilitaryServices)
+                                {
+                                    <text>@status.StartDate.ToShortDateString() @status.TypeEmployment РФ, в/ч @m.PlaceService, @m.PostMilitary</text>
+                                }
+                            }
+                            @if (status.TypeEmployment == typeemployment.Работает)
+                            {
+                                @foreach (var j in status.Jobs)
+                                {
+                                    <text>
+                                        @status.StartDate.ToShortDateString() @status.TypeEmployment в
+                                        <a href="/workplaces">@j.Workplace.Appellation</a>, должность — @j.Position
+                                    </text>
+                                }
+                            }
+                        </p>
+                    </div>
+                }
+            }
         </fieldset>
+    </div>
+    <div class="modal fade" id="DeleteEmployment" tabindex="-1" role="dialog" aria-labelledby="delModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="delModalLabel">Удалить эту деятельность</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="mt-4">
+                        <div>
+                            <p>Вы действиетельно хотите удалить эту запись: <strong id="statusNameToDelete"></strong>?</p>
+                            <div class="modal-footer">
+                                <form method="post">
+                                    <input type="hidden" asp-for="Student.ID" />
+                                    <input type="hidden" id="statusIdToDelete" name="statusId" />
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмета</button>
+                                    <input type="submit" class="btn btn-danger" value="Удалить" asp-page-handler="DeleteStatus" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

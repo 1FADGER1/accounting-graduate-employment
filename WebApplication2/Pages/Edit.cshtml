@@ -1,0 +1,156 @@
+﻿@page
+@model WebApplication2.Pages.EditModel
+@{
+    ViewData["Title"] = "Изменить " + Model.Student.FullName;
+}
+
+<div id="edit">
+    <div class="mt-4">
+        <div>
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Student.ID" />
+                <div class="form-group mt-4 text-left">
+                    <label asp-for="Student.FullName" class="control-label">ФИО студента</label>
+                    <input asp-for="Student.FullName" class="form-control" />
+                    <span asp-validation-for="Student.FullName" class="text-danger"></span>
+                </div>
+                <div class="row mt-4">
+                    <div class="form-group col text-left">
+                        <label asp-for="Student.Gender" class="control-label">Пол</label>
+                        <select asp-for="Student.Gender" class="form-select" aria-label="Default select example">
+                            <option selected>Не выбрано</option>
+                            <option value="Мужской">Мужской</option>
+                            <option value="Женский">Женский</option>
+                        </select>
+                        <span asp-validation-for="Student.Gender" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col text-left">
+                        <label asp-for="Student.Birthday" class="control-label">Дата рождения</label>
+                        <input asp-for="Student.Birthday" class="form-control" type="date" />
+                        <span asp-validation-for="Student.Birthday" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group mt-4 text-left">
+                    <label asp-for="Student.Nationality" class="control-label">Национальность</label>
+                    <input asp-for="Student.Nationality" class="form-control" />
+                    <span asp-validation-for="Student.Nationality" class="text-danger"></span>
+                </div>
+                <div class="form-group mt-4 text-left">
+                    <label asp-for="Student.SNILS" class="control-label">СНИЛС</label>
+                    <input asp-for="Student.SNILS" class="form-control" />
+                    <span asp-validation-for="Student.SNILS" class="text-danger"></span>
+                </div>
+                <div class="row mt-4">
+                    <div class="form-group col text-left">
+                        <label asp-for="Student.Email" class="control-label">Email</label>
+                        <input asp-for="Student.Email" class="form-control" />
+                        <span asp-validation-for="Student.Email" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col text-left">
+                        <label asp-for="Student.PhoneNumber" class="control-label">Номер телефона</label>
+                        <input asp-for="Student.PhoneNumber" class="form-control" />
+                        <span asp-validation-for="Student.PhoneNumber" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="form-group col text-left">
+                        <label asp-for="Student.YearAdmission" class="control-label">Дата поступления</label>
+                        <input asp-for="Student.YearAdmission" class="form-control" />
+                        <span asp-validation-for="Student.YearAdmission" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col text-left">
+                        <label asp-for="Student.YearGraduation" class="control-label">Дата окончания</label>
+                        <input asp-for="Student.YearGraduation" class="form-control" />
+                        <span asp-validation-for="Student.YearGraduation" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="form-group col text-left">
+                        <label asp-for="Student.CodeSpecialty" class="control-label">Код <a href="/Specialties">специальности</a></label>
+                        <select asp-for="Student.CodeSpecialty" class="form-select" aria-label="Default select example">
+                            <option selected>Не выбрано</option>
+                            @if (Model.Specialties != null)
+                            {
+                                @foreach (var specialty in Model.Specialties)
+                                {
+                                    <option value="@specialty.CodeSpecialty">@specialty.CodeSpecialty @specialty.NameSpecialty @specialty.TrainingSpecialty</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="Student.CodeSpecialty" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col text-left">
+                        <label asp-for="Student.FormEducation" class="control-label">Форма обучения</label>
+                        <select asp-for="Student.FormEducation" class="form-select" aria-label="Default select example">
+                            <option selected>Не выбрано</option>
+                            @foreach (var item in Html.GetEnumSelectList<form_education>())
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Student.FormEducation" class="text-danger"></span>
+                    </div>
+                </div>
+                <h5 class="text-left mt-5">Адрес проживания</h5>
+                <div class="row mt-4">
+                    <div class="form-group col text-left">
+                        <label asp-for="Student.Address.Country" class="control-label">Страна</label>
+                        <input asp-for="Student.Address.Country" class="form-control" />
+                        <span asp-validation-for="Student.Address.Country" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col text-left">
+                        <label asp-for="Student.Address.Region" class="control-label">Регион</label>
+                        <input asp-for="Student.Address.Region" class="form-control" />
+                        <span asp-validation-for="Student.Address.Region" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="form-group col text-left">
+                        <label asp-for="Student.Address.District" class="control-label">Район</label>
+                        <input asp-for="Student.Address.District" class="form-control" />
+                        <span asp-validation-for="Student.Address.District" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col text-left">
+                        <label asp-for="Student.Address.Locality" class="control-label">Населенный пункт</label>
+                        <select asp-for="Student.Address.Locality" class="form-select" aria-label="Default select example">
+                            <option selected>Не выбрано</option>
+                            <option value="Город">Город</option>
+                            <option value="Посёлок городского типа">Посёлок городского типа</option>
+                            <option value="Сельсовет">Сельсовет</option>
+                        </select>
+                        <span asp-validation-for="Student.Address.Locality" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="form-group col text-left">
+                        <label asp-for="Student.Address.City" class="control-label">Название НП</label>
+                        <input asp-for="Student.Address.City" class="form-control" />
+                        <span asp-validation-for="Student.Address.City" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col text-left">
+                        <label asp-for="Student.Address.Street" class="control-label">Улица</label>
+                        <input asp-for="Student.Address.Street" class="form-control" />
+                        <span asp-validation-for="Student.Address.Street" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="form-group col text-left">
+                        <label asp-for="Student.Address.HouseNumber" class="control-label">Номер дома</label>
+                        <input asp-for="Student.Address.HouseNumber" class="form-control" />
+                        <span asp-validation-for="Student.Address.HouseNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group col text-left">
+                        <label asp-for="Student.Address.ApartmentNumber" class="control-label">Номер квартиры</label>
+                        <input asp-for="Student.Address.ApartmentNumber" class="form-control" />
+                        <span asp-validation-for="Student.Address.ApartmentNumber" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Сохранить" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+        <a asp-page="./Detail" asp-route-id="@Model.Student.ID">Вернуться к студенту</a>
+    </div>
+</div>

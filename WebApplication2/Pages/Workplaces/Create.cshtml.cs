@@ -31,7 +31,6 @@ namespace WebApplication2.Pages.Workplaces
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-            Console.WriteLine("dfgf");
             if (!ModelState.IsValid || _context.Workplace == null || Workplace == null)
             {
                 return Page();
