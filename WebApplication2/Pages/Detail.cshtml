@@ -7,7 +7,7 @@
 <div id="details">
     <div style="display: flex; align-items: baseline; margin-bottom: 10px;">
         <h1 style="margin-right: 50px;">@Model.Student.FullName</h1>
-        <a type="button" class="btn btn-primary" style="margin-right: 8px;" title="Изменить данные студента" asp-page="./Edit" asp-route-id="@Model.Student.ID">Изменить</a><!-- Нужно добавить кнопку изменить, которая будет переадресовавыть на Edit -->
+        <a type="button" class="btn btn-primary" style="margin-right: 8px;" title="Изменить данные студента" asp-page="./Edit" asp-route-id="@Model.Student.ID">Изменить</a>
         <button type="button" class="btn btn-primary" title="Удалить эту запись" data-toggle="modal" data-target="#DeleteStudent">Удалить</button>
     </div>
     <div class="modal fade" id="DeleteStudent" tabindex="-1" role="dialog" aria-labelledby="DeleteModalLabel" aria-hidden="true">
@@ -71,7 +71,7 @@
         <fieldset class="col-md-7" style="margin-bottom: 10px;">
             <div style="display: flex; align-items: baseline; margin: 10px 0 10px 0;">
                 <h4 style="margin-right: 140px;">Деятельность выпускника</h4>
-                <button type="button" class="btn btn-primary" title="Добавление в БД" data-toggle="modal" data-target="#Add">Добавить</button> <!-- Выравнять кнопку -->
+                <button type="button" class="btn btn-primary" title="Добавление в БД" data-toggle="modal" data-target="#Add">Добавить</button>
             </div>
             <div class="modal fade" id="Add" tabindex="-1" role="dialog" aria-labelledby="AddModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-lg" role="document">
