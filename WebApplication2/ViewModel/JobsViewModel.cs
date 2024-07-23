@@ -1,5 +1,4 @@
-﻿
-namespace WebApplication2.Models
+﻿namespace WebApplication2.ViewModel
 {
     public class JobsViewModel
     {

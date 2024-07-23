@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using WebApplication2.Models;
+using WebApplication2.ViewModel;
 
 namespace WebApplication2.Pages
 {

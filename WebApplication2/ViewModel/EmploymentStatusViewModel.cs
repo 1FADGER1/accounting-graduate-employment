@@ -1,7 +1,7 @@
 ﻿
 using System.ComponentModel.DataAnnotations;
 
-namespace WebApplication2.Models
+namespace WebApplication2.ViewModel
 {
     public class EmploymentStatusViewModel
     {
